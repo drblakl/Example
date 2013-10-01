@@ -2,6 +2,7 @@ package example;
 
 import network.PacketHandler;
 import proxies.CommonProxy;
+import config.ConfigHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -13,13 +14,15 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
-@Mod(modid = "StevesExample", name= "Steve's Example", version="Lecture 1")
-@NetworkMod(channels={"example"}, clientSideRequired=true, serverSideRequired=false, packetHandler = PacketHandler.class)
+/*
+ * Pahimar does this slightly different
+ */
+@Mod(modid = ModInformation.ID, name= ModInformation.NAME, version=ModInformation.VERSION)
+@NetworkMod(channels={ModInformation.CHANNEL}, clientSideRequired=true, serverSideRequired=false, packetHandler = PacketHandler.class)
 public class StevesExample {
     
-    @Instance("StevesExample")
+    @Instance(ModInformation.ID)
     public static StevesExample instance;
-    
 
     /*
      * Variable Declaration and Item Creation
@@ -37,12 +40,18 @@ public class StevesExample {
         /*
          * Register Sounds / Blocks / Config 
          */
+        // Grab the suggested config file from the event
+        ConfigHandler.init(event.getSuggestedConfigurationFile());
+        
+        // Quick way to access variable
+        System.out.println(ConfigHandler.SOME_TEXT_VALUE);
+        
+        proxy.initSounds();
+        proxy.registerRenderers();
     }
     
     @Init
     public void init(FMLInitializationEvent event){
-        proxy.initSounds();
-        proxy.registerRenderers();
         /*
          * Init is when turning on
          */

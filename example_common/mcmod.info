@@ -1,0 +1,21 @@
+[
+{
+  "modid": "StevesExample",
+  "name": "Steve's Example",
+  "description": "Initial development of Steve's Example Mod",
+  "version": "Lecture 1",
+  "url": "http://courses.vswe.se/?course=3&lecture=23",
+  "updateUrl": "",
+  "authorList": [
+    "drblakl",
+    "Vswe"
+  ],
+  "credits": "Thanks to Steve and all the students of this course",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]
