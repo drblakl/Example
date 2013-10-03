@@ -45,7 +45,6 @@ public class StevesExample {
         ConfigHandler.init(event.getSuggestedConfigurationFile());
         
         Items.init();
-        Items.addNames();
         
         proxy.initSounds();
         proxy.registerRenderers();
@@ -56,7 +55,7 @@ public class StevesExample {
         /*
          * Init is when turning on
          */
-        
+    	Items.addNames();
     }
     
     @EventHandler
