@@ -4,10 +4,10 @@ import network.PacketHandler;
 import proxies.CommonProxy;
 import config.ConfigHandler;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -32,7 +32,7 @@ public class StevesExample {
     @SidedProxy(clientSide="proxies.ClientProxy", serverSide="proxies.CommonProxy")
     public static CommonProxy proxy;
     
-    @PreInit
+    @EventHandler
     public void preInit(FMLPreInitializationEvent event){
         /*
          * PreInit is before turning on
@@ -50,7 +50,7 @@ public class StevesExample {
         proxy.registerRenderers();
     }
     
-    @Init
+    @EventHandler
     public void init(FMLInitializationEvent event){
         /*
          * Init is when turning on
@@ -58,7 +58,7 @@ public class StevesExample {
         
     }
     
-    @PostInit
+    @EventHandler
     public void postInit(FMLPostInitializationEvent event){
         /*
          * PostInit is after all of the mods have been loaded
