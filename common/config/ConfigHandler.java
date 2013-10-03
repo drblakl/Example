@@ -1,5 +1,7 @@
 package config;
 
+import items.ItemInfo;
+
 import java.io.File;
 
 import net.minecraftforge.common.Configuration;
@@ -20,17 +22,7 @@ public class ConfigHandler {
         // Load everything from config file
         config.load();
         
-        // test variables
-        /*
-        int test = config.get("useless stuff", "example", 5).getInt();
-        String test2 = config.get("useless stuff", "Some text", "Default Text").getString();
-        */
-        
-        /*
-         * Get Values
-         */
-        EXAMPLE_VALUE = config.get(CATEGORY_USELESS, EXAMPLE_NAME, EXAMPLE_DEFAULT).getInt();
-        SOME_TEXT_VALUE = config.get(CATEGORY_USELESS, SOME_TEXT_NAME, SOME_TEXT_DEFAULT).getString();
+        ItemInfo.WAND_ID = config.getItem(ItemInfo.WAND_KEY, ItemInfo.WAND_DEFAULT).getInt() - 256;
         
         
         // save changes

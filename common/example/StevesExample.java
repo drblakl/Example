@@ -1,5 +1,6 @@
 package example;
 
+import items.Items;
 import network.PacketHandler;
 import proxies.CommonProxy;
 import config.ConfigHandler;
@@ -43,8 +44,8 @@ public class StevesExample {
         // Grab the suggested config file from the event
         ConfigHandler.init(event.getSuggestedConfigurationFile());
         
-        // Quick way to access variable
-        System.out.println(ConfigHandler.SOME_TEXT_VALUE);
+        Items.init();
+        Items.addNames();
         
         proxy.initSounds();
         proxy.registerRenderers();
