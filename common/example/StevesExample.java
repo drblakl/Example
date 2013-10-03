@@ -56,6 +56,7 @@ public class StevesExample {
          * Init is when turning on
          */
     	Items.addNames();
+    	Items.registerRecipes();
     }
     
     @EventHandler
