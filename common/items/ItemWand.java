@@ -1,5 +1,7 @@
 package items;
 
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,6 +26,8 @@ public class ItemWand extends Item {
     public boolean itemInteractionForEntity(ItemStack itemstack, EntityPlayer player, EntityLivingBase target){
     	if(!target.worldObj.isRemote){
     		target.motionY = 2;
+    		// Set item damage to track how many times the item has been used
+    		itemstack.setItemDamage(itemstack.getItemDamage() + 1);
     	}
     	return false;
     }
@@ -32,5 +36,11 @@ public class ItemWand extends Item {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister register){
     	itemIcon = register.registerIcon(ItemInfo.TEXTURE_LOCATION + ":" + ItemInfo.WAND_ICON);
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack itemstack, EntityPlayer player, List info, boolean useExtraInformation){
+    	info.add("This fun thing has been used " + itemstack.getItemDamage() + " times");
     }
 }
