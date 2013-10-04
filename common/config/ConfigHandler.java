@@ -4,6 +4,7 @@ import items.ItemInfo;
 
 import java.io.File;
 
+import blocks.BlockInfo;
 import net.minecraftforge.common.Configuration;
 
 public class ConfigHandler {
@@ -22,8 +23,16 @@ public class ConfigHandler {
         // Load everything from config file
         config.load();
         
+        /*
+         * Item Configuration
+         */
         ItemInfo.WAND_ID = config.getItem(ItemInfo.WAND_KEY, ItemInfo.WAND_DEFAULT).getInt() - 256;
         ItemInfo.CARD_ID = config.getItem(ItemInfo.CARD_KEY, ItemInfo.CARD_DEFAULT).getInt() - 256;
+        
+        /*
+         * Block Configuration
+         */
+        BlockInfo.MACHINE_ID = config.getBlock(BlockInfo.MACHINE_KEY,  BlockInfo.MACHINE_DEFAULT).getInt();
         
         // save changes
         config.save();

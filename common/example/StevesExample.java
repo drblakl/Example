@@ -1,5 +1,6 @@
 package example;
 
+import blocks.Blocks;
 import items.Items;
 import network.PacketHandler;
 import proxies.CommonProxy;
@@ -45,6 +46,7 @@ public class StevesExample {
         ConfigHandler.init(event.getSuggestedConfigurationFile());
         
         Items.init();
+        Blocks.init();
         
         proxy.initSounds();
         proxy.registerRenderers();
@@ -57,6 +59,8 @@ public class StevesExample {
          */
     	Items.addNames();
     	Items.registerRecipes();
+    	
+    	Blocks.addNames();
     }
     
     @EventHandler
