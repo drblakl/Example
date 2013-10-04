@@ -23,7 +23,7 @@ public class ConfigHandler {
         config.load();
         
         ItemInfo.WAND_ID = config.getItem(ItemInfo.WAND_KEY, ItemInfo.WAND_DEFAULT).getInt() - 256;
-        
+        ItemInfo.CARD_ID = config.getItem(ItemInfo.CARD_KEY, ItemInfo.CARD_DEFAULT).getInt() - 256;
         
         // save changes
         config.save();
