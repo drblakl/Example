@@ -12,4 +12,5 @@ public class ItemInfo {
 	// Icons
 	public static final String TEXTURE_LOCATION = "example";
 	public static final String WAND_ICON = "wand";
+	public static final String WAND_CHARGED_ICON = "wand_charged";
 }
