@@ -29,7 +29,7 @@ public class BlockMachine extends Block {
 	private Icon botIcon;
 	
 	@SideOnly(Side.CLIENT)
-	private Icon sideIcon;
+	private Icon[] sideIcons;
 	
 	@SideOnly(Side.CLIENT)
 	private Icon disableIcon;	
@@ -39,7 +39,13 @@ public class BlockMachine extends Block {
 	public void registerIcons(IconRegister register){
 		topIcon = register.registerIcon(BlockInfo.TEXTURE_LOCATION + ":" + BlockInfo.MACHINE_TOP);
 		botIcon = register.registerIcon(BlockInfo.TEXTURE_LOCATION + ":" + BlockInfo.MACHINE_BOT);
-		sideIcon = register.registerIcon(BlockInfo.TEXTURE_LOCATION + ":" + BlockInfo.MACHINE_SIDE);
+		
+		sideIcons = new Icon[BlockInfo.MACHINE_SIDES.length];
+		
+		for(int i = 0; i < sideIcons.length; i++){
+			sideIcons[i] = register.registerIcon(BlockInfo.TEXTURE_LOCATION + ":" + BlockInfo.MACHINE_SIDES[i]);	
+		}
+		
 		disableIcon = register.registerIcon(BlockInfo.TEXTURE_LOCATION + ":" + BlockInfo.MACHINE_DISABLED);
 	}
 	
@@ -54,12 +60,13 @@ public class BlockMachine extends Block {
 		}
 		else{
 			// We could adjust based on the side if needed to have an image for all sides
-			return sideIcon;
+			int type = meta / 2;
+			return sideIcons[type];
 		}
 	}
 	
 	private boolean isDisabled(int meta){
-		return meta == 1;
+		return meta % 2 == 1;
 	}
 	
 	@Override
@@ -91,7 +98,10 @@ public class BlockMachine extends Block {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ){
 		if(!world.isRemote){
-			int newMeta = world.getBlockMetadata(x,  y,  z) == 0 ? 1: 0;
+			int meta = world.getBlockMetadata(x,  y,  z);
+			int type = meta / 2;
+			int disabled = meta % 2 == 0 ? 1 : 0;
+			int newMeta = type * 2 + disabled;
 			
 			// Usually use 3, for more advanced check that flag later
 			world.setBlockMetadataWithNotify(x,  y,  z,  newMeta, 3);

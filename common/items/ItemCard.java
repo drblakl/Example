@@ -2,11 +2,15 @@ package items;
 
 import java.util.List;
 
+import blocks.BlockInfo;
+import blocks.Blocks;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -52,6 +56,28 @@ public class ItemCard extends Item {
 			// Add all items to tab
 			ItemStack stack = new ItemStack(id, 1, i);
 			list.add(stack);
+		}
+	}
+	
+	@Override
+	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ){
+		if(!world.isRemote && world.getBlockId(x,  y,  z) == BlockInfo.MACHINE_ID){
+			int meta = world.getBlockMetadata(x,  y,  z);
+			
+			int disabled = meta % 2;
+			int type = stack.getItemDamage() + 1;
+			int newMeta = type * 2 + disabled;
+			
+			// 3 is present to let the block know how to notify
+			// use 3 by default
+			world.setBlockMetadataWithNotify(x,  y,  z,  newMeta,  3);
+			
+			stack.stackSize--;
+			
+			return true;
+		}
+		else{
+			return false;
 		}
 	}
 }
