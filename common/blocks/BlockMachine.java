@@ -1,11 +1,14 @@
 package blocks;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
@@ -80,10 +83,33 @@ public class BlockMachine extends Block {
 	public void onNeighborBlockChange(World world, int x, int y, int z, int id){
 		if(!world.isRemote && !isDisabled(world.getBlockMetadata(x,  y,  z)) && world.isBlockIndirectlyGettingPowered(x,  y,  z)){
 			// In order to make it properly, we would want to store the old state
-			for(int i = -2; i <= 2; i++){
-				for(int j = -2; j <= 2; j++){
-					spawnAnvil(world, x + i, y + 20, z + j);
-				}
+			int meta = world.getBlockMetadata(x,  y,  z);
+
+			switch(meta / 2){
+				case 1:
+					// Arrow - Type 1
+					for(int i = 0; i < 5; i++){
+						spawnAnvil(world, x, y + 20 + i, z);
+					}
+					break;
+				case 2:
+					// Border/Box
+					for(int i = -1; i <= 1; i++){
+						spawnAnvil(world, x + i, y + 20, z - 2);
+						spawnAnvil(world, x + i, y + 20, z + 2);
+						spawnAnvil(world, x - 2, y + 20, z + i);
+						spawnAnvil(world, x + 2, y + 20, z - i);
+					}
+					break;
+				case 3:
+					// Cross
+					for(int i = 1; i <= 3; i++){
+						spawnAnvil(world, x + i, y + 20, z);
+						spawnAnvil(world, x - i, y + 20, z);
+						spawnAnvil(world, x, y + 20, z + i);
+						spawnAnvil(world, x, y + 20, z - i);
+					}
+					break;
 			}
 		}
 	}
@@ -108,5 +134,18 @@ public class BlockMachine extends Block {
 		}
 		
 		return true;
+	}
+	
+	@Override
+	public int damageDropped(int meta){
+		return meta;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void getSubBlocks(int id, CreativeTabs tab, List list){	
+		for(int i = 0; i < BlockInfo.MACHINE_SIDES.length; i++){
+			list.add(new ItemStack(id, 1, i * 2));
+		}
 	}
 }

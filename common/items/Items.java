@@ -15,6 +15,10 @@ public class Items {
 		// Only time the new item is created
 		wand = new ItemWand(ItemInfo.WAND_ID);
 		card = new ItemCard(ItemInfo.CARD_ID);
+		
+		/*
+		 * DO NOT Create items associated with blocks here
+		 */
 	}
 	
 	public static void addNames(){
